@@ -1,1 +1,6 @@
 .vscode/
+env/
+__pycache__/
+model/__pycache__
+service/__pycache__
+service/database/credentials.json
