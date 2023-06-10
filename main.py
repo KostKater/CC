@@ -11,7 +11,7 @@ security = HTTPBearer()
 
 @app.get("/")
 def index():
-    return {"greetings": f"Hello! {env['MY_VAR']}"}
+    return {"greetings": f"Hello! this is {env['MY_VAR']} stage"}
 
 
 @app.get("/kostkater/")
