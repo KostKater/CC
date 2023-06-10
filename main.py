@@ -1,10 +1,17 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from service import auth, db
 from model.user_model import UserAuth
+from service.config import auth
+# from service.database_manager import *
+from os import environ as env
 
 app = FastAPI()
 security = HTTPBearer()
+
+
+@app.get("/")
+def index():
+    return {"greetings": f"Hello! {env['MY_VAR']}"}
 
 
 @app.get("/kostkater/")
@@ -17,6 +24,7 @@ async def login(userAuth: UserAuth):
     try:
         user = auth.sign_in_with_email_and_password(
             userAuth.email, userAuth.password)
+        # await read_users_collection()
         return {"message": "Login successful",
                 "userInfo": {
                     "email": user["email"],

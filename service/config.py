@@ -17,8 +17,7 @@ firebase = pyrebase.initialize_app(config)
 
 auth = firebase.auth()
 storage = firebase.storage()
-# db = firebase.database()
-# db = firestore.Client(project="kost-kater")
-cred = credentials.Certificate('credentials.json')
-app = firebase_admin.initialize_app(cred)
-db = firestore.client()
+
+# cred = credentials.Certificate('credentials.json')
+# app = firebase_admin.initialize_app(cred)
+# db = firestore.client()
