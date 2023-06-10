@@ -2,6 +2,8 @@ version: "3"
 
 services:
   web:
+    container_name: kostkater-container
+    image: kostkater-image:staging
     build: .
     command: sh -c "uvicorn main:app --port=80 --host=0.0.0.0"
     env_file:

@@ -1,17 +1,17 @@
-# from service.config import db
+from service.config import db
 
 
 async def read_users_collection():
-    # users_ref = db.collection('users')
-    # docs = users_ref.stream()
-    # users_list = []
+    users_ref = db.collection('users')
+    docs = users_ref.stream()
+    users_list = []
 
-    # for doc in docs:
-    #     user_data = doc.to_dict()
-    #     users_list.append(user_data)
+    for doc in docs:
+        user_data = doc.to_dict()
+        users_list.append(user_data)
 
-    # return users_list
-    pass
+    return users_list
+    # pass
 
 
 def read_user_doc(id):
