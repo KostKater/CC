@@ -1,6 +1,9 @@
 import pyrebase
 import firebase_admin
 from firebase_admin import credentials, firestore
+from os import environ as env
+import requests
+
 
 config = {
     "apiKey": "AIzaSyBnCn5IwBNqqkFWma-eiS2DFJOm34K7-w0",
@@ -14,10 +17,15 @@ config = {
 }
 
 firebase = pyrebase.initialize_app(config)
-
 auth = firebase.auth()
 storage = firebase.storage()
 
-# cred = credentials.Certificate('credentials.json')
-# app = firebase_admin.initialize_app(cred)
-# db = firestore.client()
+url = env['FIREBASE_CRED']
+local_filepath = "credential.json"
+response = requests.get(url)
+with open(local_filepath, "wb") as file:
+    file.write(response.content)
+
+cred = credentials.Certificate("credential.json")
+app = firebase_admin.initialize_app(cred)
+db = firestore.client()

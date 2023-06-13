@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from model.user_model import UserAuth
 from service.config import auth
-# from service.database_manager import *
+from service.database_manager import *
 from os import environ as env
 
 app = FastAPI()
@@ -11,20 +11,23 @@ security = HTTPBearer()
 
 @app.get("/")
 def index():
-    return {"greetings": f"Hello! {env['MY_VAR']}"}
-
-
-@app.get("/kostkater/")
-def index():
     return {"greetings": "Hi! Welcome to KostKater Back-End App"}
 
 
-@app.post("/kostkater/login")
+@app.get("/check")
+async def check_environment():
+    try:
+        user_list = await read_users_collection()
+        return {"env": f"This is in {env['ENV']} environment", "userList": user_list}
+    except:
+        raise HTTPException(status_code=503, detail="Service Unavailable")
+
+
+@app.post("/login")
 async def login(userAuth: UserAuth):
     try:
         user = auth.sign_in_with_email_and_password(
             userAuth.email, userAuth.password)
-        # await read_users_collection()
         return {"message": "Login successful",
                 "userInfo": {
                     "email": user["email"],
@@ -34,7 +37,7 @@ async def login(userAuth: UserAuth):
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
 
-@app.post("/kostkater/register")
+@app.post("/register")
 async def register(userAuth: UserAuth):
     try:
         user = auth.create_user_with_email_and_password(
@@ -48,7 +51,7 @@ async def register(userAuth: UserAuth):
         raise HTTPException(status_code=400, detail="Registration failed")
 
 
-@app.get("/kostkater/user/profile")
+@app.get("/user/profile")
 async def get_user_email(credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         token = credentials.credentials
