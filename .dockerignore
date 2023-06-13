@@ -2,8 +2,10 @@
 env/
 __pycache__/
 model/__pycache__
+model/ml/__pycache__
 service/__pycache__
 credentials.json
+credential.json
 
 *.env
 *.env.*

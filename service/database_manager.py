@@ -1,8 +1,8 @@
 from service.config import db
 
 
-async def read_users_collection():
-    users_ref = db.collection('users')
+def read_users_collection():
+    users_ref = db.collection("users")
     docs = users_ref.stream()
     users_list = []
 
@@ -11,41 +11,29 @@ async def read_users_collection():
         users_list.append(user_data)
 
     return users_list
-    # pass
 
 
-def read_user_doc(id):
-    pass
+def read_user_doc(email):
+    doc_ref = db.collection("users").document(email)
+    doc = doc_ref.get()
+    return doc.to_dict()
 
 
-def add_user_doc(id, email):
-    pass
+def add_user_doc(email):
+    data = {
+        "email": email,
+        "eat_halal": True,
+        "allergies": []
+    }
+
+    db.collection("users").document(email).set(data)
 
 
-def update_user_doc(id):
-    pass
+def update_user_doc(email, eat_halal, allergies):
+    data = {
+        "email": email,
+        "eat_halal": eat_halal,
+        "allergies": allergies
+    }
 
-
-async def read_meals_collection():
-    # meals_ref = db.collection('meals')
-    # docs = meals_ref.stream()
-    # meals_list = []
-
-    # for doc in docs:
-    #     user_data = doc.to_dict()
-    #     meals_list.append(user_data)
-
-    # return meals_list
-    pass
-
-
-def read_meal_doc(id):
-    pass
-
-
-def read_meal_docs(id):
-    pass
-
-
-def add_meal_doc(id):
-    pass
+    db.collection("users").document(email).set(data)

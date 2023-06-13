@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import BaseModel
 
 
@@ -6,6 +7,6 @@ class UserAuth(BaseModel):
     password: str
 
 
-class UserData(BaseModel):
-    email: str
-    password: str
+class UserPreferences(BaseModel):
+    eat_halal: bool = True
+    allergies: List[str] = []
