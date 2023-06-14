@@ -1,10 +1,8 @@
-from typing import List
+from datetime import datetime
 from pydantic import BaseModel
 
 
-class MealsParams(BaseModel):
-    ingredients: List[str] = []
-    allergies: List[str] = []
-    is_halal: bool = True
-    price_max: int = 999999999
-    price_min: int = 0
+# class MealPlan(BaseModel):
+#     date = datetime.date
+#     meal_name = str
+#     group_meal = str

@@ -23,17 +23,24 @@ def add_user_doc(email):
     data = {
         "email": email,
         "eat_halal": True,
-        "allergies": []
+        "allergies": [],
+        "ingredients": [],
+        "price_min": 0,
+        "price_max": 999999999
     }
 
     db.collection("users").document(email).set(data)
 
 
-def update_user_doc(email, eat_halal, allergies):
-    data = {
-        "email": email,
-        "eat_halal": eat_halal,
-        "allergies": allergies
-    }
-
-    db.collection("users").document(email).set(data)
+def update_user_doc(email, eat_halal, allergies, ingredients, price_min, price_max):
+    doc_ref = db.collection("users").document(email)
+    if eat_halal != True:
+        doc_ref.update({"eat_halal": eat_halal})
+    if allergies != []:
+        doc_ref.update({"allergies": allergies})
+    if ingredients != []:
+        doc_ref.update({"ingredients": ingredients})
+    if price_min != 0:
+        doc_ref.update({"price_min": price_min})
+    if price_max != 999999999:
+        doc_ref.update({"price_max": price_max})
